@@ -1622,4 +1622,14 @@ class UserManagementApiTest : TestBase() {
       url
     )
   }
+
+  @Test
+  fun getLogoutUrlWithReturnToShouldReturnValidUrlResponse() {
+    val url = workos.userManagement.getLogoutUrl("session_123", returnTo = "https://your-app.com")
+
+    assertEquals(
+      "http://localhost:${getWireMockPort()}/user_management/sessions/logout?session_id=session_123&return_to=https%3A%2F%2Fyour-app.com",
+      url
+    )
+  }
 }

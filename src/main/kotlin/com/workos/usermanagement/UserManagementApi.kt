@@ -466,10 +466,13 @@ class UserManagementApi(private val workos: WorkOS) {
   }
 
   /** End a user's session. The user's browser should be redirected to this URL. */
-  fun getLogoutUrl(sessionId: String): String {
+  fun getLogoutUrl(sessionId: String, returnTo: String? = null): String {
     return URIBuilder(workos.baseUrl)
       .setPath("/user_management/sessions/logout")
-      .addParameter("session_id", sessionId)
+      .apply {
+        addParameter("session_id", sessionId)
+        returnTo?.let { addParameter("return_to", it) }
+      }
       .toString()
   }
 }
